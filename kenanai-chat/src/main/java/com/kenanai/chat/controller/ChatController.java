@@ -1,5 +1,7 @@
 package com.kenanai.chat.controller;
 
+import com.kenanai.chat.service.MemoryChatService;
+import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.image.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/ai")
 public class ChatController {
@@ -15,6 +19,9 @@ public class ChatController {
   private final ChatClient chatClient;
 
   private final ImageModel imageModel;
+
+  @Resource
+  private MemoryChatService memoryChatService;
 
   public ChatController(ChatClient.Builder builder, ImageModel imageModel) {
     this.chatClient = builder.defaultSystem("你是一个高智商的侦探，用江户川柯南的语气回答问题").build();
@@ -39,16 +46,17 @@ public class ChatController {
     return "";
   }
 
-  @RequestMapping("/image")
-  public String image(String input) {
-    ImageOptions options = ImageOptionsBuilder.builder()
-            .withModel("wanx-v1")
-            .build();
-
-    ImagePrompt imagePrompt = new ImagePrompt(input, options);
-    ImageResponse response = imageModel.call(imagePrompt);
-    String imageUrl = response.getResult().getOutput().getUrl();
-
-    return "redirect:" + imageUrl;
+  /**
+   * 带有记忆的对话
+   * @param input
+   * @return
+   */
+  @RequestMapping("/memory")
+  public String memory(String input,String messageId) {
+    if ("0".equals(messageId)){
+      messageId = UUID.randomUUID().toString();
+    }
+    return memoryChatService.memory(input,messageId);
   }
+
 }
