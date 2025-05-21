@@ -1,0 +1,11 @@
+# Project exclude paths
+/kenanai-auth/target/
+/kenanai-chat/target/
+/kenanai-common/target/
+/kenanai-gateway/target/
+/kenanai-pay/target/
+/kenanai-pay-api/target/
+/kenanai-share-file/target/
+/kenanai-shop/target/
+/kenanai-user/target/
+/kenanai-user-api/target/

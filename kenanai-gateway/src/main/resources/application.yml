@@ -1,0 +1,87 @@
+server:
+  port: 9999
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: kenanai-gateway
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # 认证服务
+        - id: kenanai-auth
+          uri: http://localhost:9000
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=0
+        
+        # 用户服务
+        - id: kenanai-user
+          uri: http://localhost:9001
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=0
+        
+        # 聊天服务
+        - id: kenanai-chat
+          uri: http://localhost:9002
+          predicates:
+            - Path=/chat/**
+          filters:
+            - StripPrefix=0
+        
+        # 商城服务
+        - id: kenanai-shop
+          uri: http://localhost:9003
+          predicates:
+            - Path=/shop/**
+          filters:
+            - StripPrefix=0
+
+        - id: kenanai-share-file
+          uri: http://localhost:8083
+          predicates:
+            - Path=/share/**
+          filters:
+            - StripPrefix=0
+  
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  
+# 自定义JWT配置
+jwt:
+  # JWT密钥
+  secret: kenanai-secret-key-for-jwt-token-signature-verification-and-generation
+  # 不需要认证的路径
+  ignore-urls:
+    - /auth/login
+    - /auth/validate
+    - /shop/product/list
+    - /shop/product/hot
+    - /shop/product/recommend
+    - /shop/product/*
+    - /shop/category/**
+    - /doc.html
+    - /v3/api-docs/**
+    - /swagger-resources/**
+    - /webjars/**
+    - /favicon.ico
+    - /*.html
+
+logging:
+  level:
+    com.kenanai: debug
+    org.springframework.cloud.gateway: debug 

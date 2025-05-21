@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="kenanai-pay-api" />
+        <module name="kenanai-auth" />
+        <module name="kenanai-chat" />
+        <module name="kenanai-user-api" />
+        <module name="kenanai-share-file" />
+        <module name="kenanai-gateway" />
+        <module name="kenanai-shop" />
+        <module name="kenanai-user" />
+        <module name="kenanai-common" />
+        <module name="kenanai-pay" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="kenanai-file" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="kenanai-auth" options="-parameters" />
+      <module name="kenanai-chat" options="-parameters" />
+      <module name="kenanai-common" options="-parameters" />
+      <module name="kenanai-file" options="-parameters" />
+      <module name="kenanai-gateway" options="-parameters" />
+      <module name="kenanai-pay" options="-parameters" />
+      <module name="kenanai-pay-api" options="-parameters" />
+      <module name="kenanai-share-file" options="-parameters" />
+      <module name="kenanai-shop" options="-parameters" />
+      <module name="kenanai-user" options="-parameters" />
+      <module name="kenanai-user-api" options="-parameters" />
+    </option>
+  </component>
+</project>

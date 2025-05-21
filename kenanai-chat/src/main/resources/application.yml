@@ -1,0 +1,59 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: kenanai-chat
+  ai:
+    dashscope:
+      api-key: sk-38123c7fd97b4195902772b2d9aa992b
+    chat:
+      client:
+        enabled: true   # 关闭之后就可以编程方式创建 ChatClient.Builder，这样可以为每个聊天模型创建一个实例 ChatModel，用于多个聊天模型一起使用
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kenanai?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: password
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      pool-name: KenanAI-HikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 聊天功能配置
+chat:
+  # 默认模型
+  default-model: gpt-3.5-turbo
+  # API密钥
+  api-key: your-openai-api-key
+  # API URL
+  api-url: https://api.openai.com/v1/chat/completions
+  # 代理设置（如果需要）
+  proxy:
+    host: 
+    port: 
+    username: 
+    password:
+
+logging:
+  level:
+    com.kenanai: debug 
